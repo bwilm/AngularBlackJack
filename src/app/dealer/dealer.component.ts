@@ -24,10 +24,14 @@ export class DealerComponent implements OnInit,AfterViewInit, OnDestroy {
   public isNewGame:boolean = false;
   public isDeal:boolean = false;
   public fadeInAnimation = false;
+  public cardBgColor:string = 'teal-600';
   public _unsubscribeAll: Subject<any> = new Subject<any>();
   
 
   constructor(private _service: BlackjackService) { 
+    this._service.$cardColor.pipe(takeUntil(this._unsubscribeAll)).subscribe((color) => {
+      this.cardBgColor = color;
+    })
     
   }
   ngOnDestroy(): void {

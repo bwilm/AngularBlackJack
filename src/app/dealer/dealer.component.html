@@ -95,9 +95,8 @@
         </div>
         </ng-template>
 
-        <div *ngIf="playerStands === false" [style.background-image]="'url(\'./assets/cardbg1.png\')'"
-            [style.background-size]="'cover'" [style.background-repeat]="'no-repeat'"
-            class="h-28 w-20 text-xl bg-white text-black flex flex-col justify-evenly m-3 p-1 rounded-md drop-shadow-lg">
+        <div *ngIf="playerStands === false"
+            class="h-28 w-20 text-xl bg-{{cardBgColor}} text-black flex flex-col justify-evenly m-3 p-1 rounded-md drop-shadow-lg">
         </div>
 
 

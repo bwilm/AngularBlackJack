@@ -4,6 +4,7 @@ import { BlackjackService } from './services/blackjack.service';
 import { cards } from './cards'
 import { CardI } from './cardsI.interface'
 import { ModalService } from './services/modal.service';
+import { StatsService } from './services/stats.service';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +21,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public dealerCards: CardI[] = [];
   public playerCards: CardI[] = [];
+  public result: string = "";
 
   public dealerScore = 0;
   public playerScore = 0;
@@ -29,28 +31,21 @@ export class AppComponent implements OnInit, OnDestroy {
   public isEndGame:boolean = false;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-  constructor(public _service:BlackjackService, public _modalService:ModalService) { 
+  constructor(public _service:BlackjackService, public _modalService:ModalService, public _statsService:StatsService){ 
 
     //subscribe to dealer score
     this._service.$dealerScore.pipe(takeUntil(this._unsubscribeAll)).subscribe(data => { this.dealerScore = data;
-      console.log(data);
       if(data >= 22){
         this.isEndGame = true;
         this.isStand = true;
         this.showModal();
-      }
-      
+      }     
     });
 
     //subscribe to player score
     this._service.$playerScore.pipe(takeUntil(this._unsubscribeAll)).subscribe(data => { this.playerScore = data;
-    console.log(data);
     if(data >= 22){
-      this._modalService._modalTitle.next("Player Bust!");
-      this.endGame();
-      this.isEndGame = true;
-      this.isStand = true;
-      this.showModal();
+      this.getPlayerCount();
     }else if(data === 21){
       this._service._isBlackJack.next(true);
       this._modalService._modalTitle.next("Blackjack!");
@@ -102,26 +97,24 @@ export class AppComponent implements OnInit, OnDestroy {
       }
     })
 
-    //check player hand 
+    //subscribe to player hand 
     this._service.$playerHand.pipe(takeUntil(this._unsubscribeAll)).subscribe(data => { 
       this.playerCards = data;
     });
 
+    //subscribe to modal isShowing
     this._modalService.$showModal.pipe(takeUntil(this._unsubscribeAll)).subscribe(data => {
       this.isModalShowing = data;
-      console.log(data);
-      if(this.isModalShowing === true){
-           console.log(this.isModalShowing, 'modal status')
-            }
     })
-    
   };
 
 
 
   ngOnInit() {
+    console.log('onInit');
   }
 
+  //Unsubscribe from observables
   ngOnDestroy(): void {
     this._unsubscribeAll.next(null);
     this._unsubscribeAll.complete()
@@ -129,25 +122,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
 
 
-
-  // public checkDealerScore() {
-  //    for (let i = 0; i < this.dealerCards.length; i++){
-  //     this.dealerScore += this.dealerCards[i]?.value;
-  //    }
-
-  //    console.log(this.dealerScore,'dealerScore');
-  //    console.log(this.dealerCards.length,'dealerCards.length');
-  //    console.log(this.dealerCards[0]?.value,'dealerCards[0]?.value');
-  //    console.log(this.dealerCards[1]?.value,'dealerCards[1]?.value');
-  //    this._service.dealerScore.next(this.dealerScore);
-  //    this.checkPlayerScore();
-    
-  // }
-
   public hitDealer(){
-      let dealerCount = this.getDealerCount();
-      console.log(dealerCount, 'dealerCount hitDealer');
-      
+      let dealerCount = this.getDealerCount();      
       // Keep drawing cards until dealer's count is 17 or higher
       while (this.getDealerCount() < 17) {
         this.pushDealerCard();
@@ -172,7 +148,7 @@ export class AppComponent implements OnInit, OnDestroy {
   
     // Adjust Ace values if needed to avoid busting
     while (aceCount > 0 && dealerScore > 21) {
-      dealerScore -= 10; // Change the value of one Ace from 11 to 1
+      dealerScore = dealerScore - 10; // Change the value of one Ace from 11 to 1
       aceCount--;
     }
   
@@ -192,17 +168,21 @@ export class AppComponent implements OnInit, OnDestroy {
       } else {
         playerScore += card.value;
       }
-
-      while (aceCount > 0 && playerScore > 21) {
-        playerScore -= 10; // Change the value of one Ace from 11 to 1
-      }
-      
     }
   
     // Adjust Ace values if needed to avoid busting
     while (aceCount > 0 && playerScore > 21) {
-      playerScore -= 10; // Change the value of one Ace from 11 to 1
+      playerScore = playerScore - 10; // Change the value of one Ace from 11 to 1
       aceCount--;
+    }
+
+    if(playerScore > 21){
+      this._modalService._modalTitle.next("Player Bust!");
+      this.result = '';
+      this.endGame();
+      this.isEndGame = true;
+      this.isStand = true;
+      this.showModal();
     }
   
     return playerScore;
@@ -219,33 +199,33 @@ export class AppComponent implements OnInit, OnDestroy {
     const dealerScore = this.getDealerCount();
     const playerScore = this.getPlayerCount();
   
-    let result = '';
+     this.result = '';
   
     if (playerScore > 21) {
-      result = 'Player Busts :(';
+      this.result = 'Player Bust :(';
 
     } else if (dealerScore > 21) {
-      result = 'Dealer Busts, You Win!';
+      this.result = 'Dealer Busts, You Win!';
 
     } else if (playerScore - dealerScore === 0) {
-      result = 'Push';
+      this.result = 'Push';
 
     } else if (playerScore > dealerScore) {
-      result = 'Player Wins';
+      this.result = 'Player Wins';
 
     } else {
-      result = 'Dealer Wins';
+      this.result = 'Dealer Wins';
 
     }
-    this._modalService._modalTitle.next(result)
+    this._modalService._modalTitle.next(this.result)
     this.endGame();
-    console.log(result);
+    
   }
   
   public showModal():void{
     this._modalService._showModal.next(true);
-    console.log(this.isModalShowing);
   }
+
 
   public endGame(){
     this._modalService._showModal.next(true);
@@ -253,6 +233,20 @@ export class AppComponent implements OnInit, OnDestroy {
     this._service._disabled.next(true);
     this._service._deal.next(false);
     
+   
+    if(this.result === 'Player Wins' || this.result === 'Dealer Busts, You Win!'){
+      this._statsService.incrementGamesWon();
+    }else if(this.result === 'Push'){
+      this._statsService.incrementGamesPushed();
+
+    }else{
+      this._statsService.incrementGamesLost();
+    }
+    
+  }
+
+  changeColor(color:string):void{
+    this._service._cardColor.next(color);
   }
 
 }

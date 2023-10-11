@@ -21,12 +21,12 @@ export class ModalComponent {
    })
    this._modalService._modalTitle.subscribe(value => {
     this.modalTitle = value;
-    if(value === "Player Busts :(" || value === "Dealer Wins" || value === "Player Bust!"){
-      this.modalColor = "red-600";
+    if(value === "Player Bust :(" || value === "Dealer Wins" || value === "Player Bust!"){
+      this.modalColor = "rose-600";
     }else if(value === "'Push'"){
       this.modalColor = "amber-600";
     }else{
-      this.modalColor = "teal-500";
+      this.modalColor = "teal-600";
     }
   
   })
