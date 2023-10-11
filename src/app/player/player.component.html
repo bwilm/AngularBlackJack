@@ -1,0 +1,24 @@
+<div class="body flex flex-row h-2/5 justify-center items-center">
+
+    <div *ngFor="let card of playerCards" class="h-28 w-20 text-xl bg-white text-black flex flex-col justify-evenly m-3 p-1 rounded-md drop-shadow-lg">
+        <div class="flex flex-row ">
+            <img class="h-4 w-4 justify-self-start" src="./assets/{{card.suit}}.png"/> 
+        </div>
+        <div class="flex flex-row self-center">
+         <h3 *ngIf="card.rank !== 'K' &&
+            card.rank !== 'Q' &&
+            card.rank !== 'J' &&
+            card.rank !=='A'"   class="text-[40px] font-bold {{card.color}}">{{card.value}}</h3>
+        <h3  *ngIf="card.value === 11" class="text-[40px] font-bold {{card.color}}">A</h3>
+        <h3 *ngIf="card.rank === 'K'"  class="text-[40px] font-bold {{card.color}}">K</h3>
+        <h3 *ngIf="card.rank === 'Q'" class="text-[40px] font-bold {{card.color}}">Q</h3>
+        <h3 *ngIf="card.rank === 'J'"  class="text-[40px] font-bold {{card.color}}">J</h3>
+        </div>
+
+        <div class="flex flex-row self-end">
+            <img class="h-4 w-4" src="./assets/{{card.suit}}.png"/> 
+        </div>  
+    </div>
+</div>
+
+

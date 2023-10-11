@@ -1,0 +1,5 @@
+<div class="flex flex-row justify-center items-center">
+    <button [disabled]="isDisabled" *ngIf="isDeal === true" class="w-[120px] h-15 rounded-lg m-2 p-2 bg-green-600 shadow-md" (click)="hit()">HIT</button>
+    <button [disabled]="isDisabled" *ngIf="isDeal === true" class="w-[120px] h-15 rounded-lg m-2 p-2 bg-blue-600 shadow-md" (click)="stand()">STAND</button>
+    <button *ngIf="!isDeal" class="w-[120px] h-15 rounded-lg m-2 p-2 bg-indigo-600 shadow-md" (click)="startNewGame()"> DEAL</button>
+</div>

@@ -1,0 +1,109 @@
+<div class="body flex flex-row w-full h-auto justify-center items-center">
+    <div class="body flex flex-row h-full justify-center items-center">
+        <ng-template ngIf="playerStands === false"  >
+        <div *ngFor="let card of dealerCards; let i = index">
+            <ng-container *ngIf="i !== 1 && playerStands !== true">
+                <div [@fadeIn]="'in'"
+                    class="h-28 w-20 text-xl bg-white text-black flex flex-col justify-evenly m-3 p-1 rounded-md drop-shadow-lg">
+                    <div class="flex flex-row ">
+                        <img class="h-4 w-4 justify-self-start" src="./assets/{{card.suit}}.png" />
+                    </div>
+                    <div class="flex flex-row self-center">
+                        <h3 *ngIf="card.rank !== 'K' &&
+                        card.rank !== 'Q' &&
+                        card.rank !== 'J' &&
+                        card.rank !=='A'" class="text-[40px] font-bold {{card.color}}">{{card.value}}</h3>
+                        <h3 *ngIf="card.value === 11" class="text-[40px] font-bold {{card.color}}">A</h3>
+                        <h3 *ngIf="card.rank === 'K'" class="text-[40px] font-bold {{card.color}}">K</h3>
+                        <h3 *ngIf="card.rank === 'Q'" class="text-[40px] font-bold {{card.color}}">Q</h3>
+                        <h3 *ngIf="card.rank === 'J'" class="text-[40px] font-bold {{card.color}}">J</h3>
+                    </div>
+                    <div class="flex flex-row self-end">
+                        <img class="h-4 w-4" src="./assets/{{card.suit}}.png" />
+                    </div>
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="playerStands === true">
+                <div [@fadeIn]="'in'"
+                    class="h-28 w-20 text-xl bg-white text-black flex flex-col justify-evenly m-3 p-1 rounded-md drop-shadow-lg">
+                    <div class="flex flex-row ">
+                        <img class="h-4 w-4 justify-self-start" src="./assets/{{card.suit}}.png" />
+                    </div>
+                    <div class="flex flex-row self-center">
+                        <h3 *ngIf="card.rank !== 'K' &&
+                        card.rank !== 'Q' &&
+                        card.rank !== 'J' &&
+                        card.rank !=='A'" class="text-[40px] font-bold {{card.color}}">{{card.value}}</h3>
+                        <h3 *ngIf="card.value === 11" class="text-[40px] font-bold {{card.color}}">A</h3>
+                        <h3 *ngIf="card.rank === 'K'" class="text-[40px] font-bold {{card.color}}">K</h3>
+                        <h3 *ngIf="card.rank === 'Q'" class="text-[40px] font-bold {{card.color}}">Q</h3>
+                        <h3 *ngIf="card.rank === 'J'" class="text-[40px] font-bold {{card.color}}">J</h3>
+                    </div>
+                    <div class="flex flex-row self-end">
+                        <img class="h-4 w-4" src="./assets/{{card.suit}}.png" />
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+        </ng-template>
+        <ng-template *ngIf="playerStands === true" >
+        <div *ngFor="let card of dealerCards; let i = index">
+            <ng-container *ngIf="i !== 1 && playerStands !== true">
+                <div [@fadeIn]="'in'"
+                    class="h-28 w-20 text-xl bg-white text-black flex flex-col justify-evenly m-3 p-1 rounded-md drop-shadow-lg">
+                    <div class="flex flex-row ">
+                        <img class="h-4 w-4 justify-self-start" src="./assets/{{card.suit}}.png" />
+                    </div>
+                    <div class="flex flex-row self-center">
+                        <h3 *ngIf="card.rank !== 'K' &&
+                        card.rank !== 'Q' &&
+                        card.rank !== 'J' &&
+                        card.rank !=='A'" class="text-[40px] font-bold {{card.color}}">{{card.value}}</h3>
+                        <h3 *ngIf="card.value === 11" class="text-[40px] font-bold {{card.color}}">A</h3>
+                        <h3 *ngIf="card.rank === 'K'" class="text-[40px] font-bold {{card.color}}">K</h3>
+                        <h3 *ngIf="card.rank === 'Q'" class="text-[40px] font-bold {{card.color}}">Q</h3>
+                        <h3 *ngIf="card.rank === 'J'" class="text-[40px] font-bold {{card.color}}">J</h3>
+                    </div>
+                    <div class="flex flex-row self-end">
+                        <img class="h-4 w-4" src="./assets/{{card.suit}}.png" />
+                    </div>
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="playerStands === true">
+                <div
+                    class="h-28 w-20 text-xl bg-white text-black flex flex-col justify-evenly m-3 p-1 rounded-md drop-shadow-lg">
+                    <div class="flex flex-row ">
+                        <img class="h-4 w-4 justify-self-start" src="./assets/{{card.suit}}.png" />
+                    </div>
+                    <div class="flex flex-row self-center">
+                        <h3 *ngIf="card.rank !== 'K' &&
+                        card.rank !== 'Q' &&
+                        card.rank !== 'J' &&
+                        card.rank !=='A'" class="text-[40px] font-bold {{card.color}}">{{card.value}}</h3>
+                        <h3 *ngIf="card.value === 11" class="text-[40px] font-bold {{card.color}}">A</h3>
+                        <h3 *ngIf="card.rank === 'K'" class="text-[40px] font-bold {{card.color}}">K</h3>
+                        <h3 *ngIf="card.rank === 'Q'" class="text-[40px] font-bold {{card.color}}">Q</h3>
+                        <h3 *ngIf="card.rank === 'J'" class="text-[40px] font-bold {{card.color}}">J</h3>
+                    </div>
+                    <div class="flex flex-row self-end">
+                        <img class="h-4 w-4" src="./assets/{{card.suit}}.png" />
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+        </ng-template>
+
+        <div *ngIf="playerStands === false" [style.background-image]="'url(\'./assets/cardbg1.png\')'"
+            [style.background-size]="'cover'" [style.background-repeat]="'no-repeat'"
+            class="h-28 w-20 text-xl bg-white text-black flex flex-col justify-evenly m-3 p-1 rounded-md drop-shadow-lg">
+        </div>
+
+
+    </div>
+
+</div>
+<div class="flex flex-row items-center justify-center">
+    <h2 class="font-bold text-black text-xs bg-orange-400 rounded-lg p-1">DEALER</h2>
+</div>
