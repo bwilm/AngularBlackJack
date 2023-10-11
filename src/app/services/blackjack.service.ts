@@ -18,6 +18,7 @@ export class BlackjackService {
   public _endGame = new BehaviorSubject<boolean>(false);
   public _disabled = new BehaviorSubject<boolean>(false);
   public _isBlackJack = new BehaviorSubject<boolean>(false);
+  public _cardColor = new BehaviorSubject<string>('teal-600');
   $dealerScore = this._dealerScore.asObservable();
   $playerScore = this._playerScore.asObservable();
   $dealerHand = this._dealerHandArray.asObservable();
@@ -28,6 +29,7 @@ export class BlackjackService {
   $endGame = this._endGame.asObservable();
   $disabled = this._disabled.asObservable();
   $isBlackJack = this._isBlackJack.asObservable();
+  $cardColor = this._cardColor.asObservable();
   private nonPlayerDeck: CardI[] = [];
   private playerDeck: CardI[] = [];
   
