@@ -29,7 +29,7 @@ jobs:
       - name: Setup Node 
         uses: actions/setup-node@v3
         with:
-          node-version: '18.12.0'
+          node-version: '18.17.1'
           
       # 4. Setup Cache
       - name: Setup Cache
@@ -51,7 +51,7 @@ jobs:
       # 6. Copy to S3 Bucket
       - name: Copy to S3 Bucket
         run: |
-          aws s3 cp ./dist/* s3://daveops.co.in
+          aws s3 cp ./dist/* s3://angularblackjack
           
       # 7. (Optional) Invalidate CloudFront
       - name: Invalidate CloudFront
