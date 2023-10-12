@@ -9,8 +9,12 @@ jobs:
   build_and_deploy_job:
     runs-on: ubuntu-latest
     name: Build and Deploy Job
-    steps:
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
 
+    steps:
       # 2. Checkout Repository
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -31,6 +35,7 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
+
       # 5. Build Angular
       - name: Build Angular
         run: |
@@ -42,7 +47,4 @@ jobs:
       # 6. Copy to S3 Bucket
       - name: Copy to S3 Bucket
         run: |
-          aws s3 cp ./dist/* s3://angularblackjack --region us-east-1
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws s3 cp ./dist/* s3://angularblackjack --region $AWS_REGION
