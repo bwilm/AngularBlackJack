@@ -8,10 +8,6 @@ on: workflow_dispatch
 jobs:
   build_and_deploy_job:
     runs-on: ubuntu-latest
-    env:
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      AWS_DEFAULT_REGION: us-east-1
     name: Build and Deploy Job
 
 
@@ -48,4 +44,7 @@ jobs:
       # 6. Copy to S3 Bucket
       - name: Copy to S3 Bucket
         run: |
-          aws s3 cp ./dist/* s3://angularblackjack
+          aws s3 cp ./dist/* s3://angularblackjack --region us-east-1
+        env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
