@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { StatsService } from '../services/stats.service';
+import { TrendModule } from 'ngx-trend';
+import { GraphService } from '../services/graph.service';
 
 @Component({
   selector: 'app-stats',
@@ -16,7 +18,7 @@ export class StatsComponent {
   public lossPercent = 0;
   public pushPercent = 0;
 
-  constructor(public _service:StatsService){
+  constructor(public _service:StatsService, public _graphService:GraphService){
     this._service.$gamesPlayed.subscribe(data => {this.gamesPlayed = data});
     this._service.$gamesWon.subscribe(data => {this.gamesWon = data});
     this._service.$gamesLost.subscribe(data => {this.gamesLost = data});
@@ -40,8 +42,9 @@ export class StatsComponent {
     const gamesWon = this.gamesWon;
     
     if(gamesPlayed === 0){
-      return 0;
+      return ;
     }else{
+      this._graphService.pushWinPercentData(Math.round(gamesWon / gamesPlayed * 100));
       return Math.round((gamesWon / gamesPlayed) * 100);
     }
   }
@@ -52,8 +55,9 @@ export class StatsComponent {
     const gamesWon = this.gamesWon;
 
     if(gamesPlayed === 0){
-      return 0;
+      return ;
     }else{
+      this._graphService.pushLosePercentData(Math.round(gamesLost / gamesPlayed * 100));
       return Math.round((gamesLost / gamesPlayed) * 100);
     }
   }
@@ -63,10 +67,15 @@ export class StatsComponent {
     const gamesPushed = this.gamesPushed;
 
     if(gamesPlayed === 0){
-      return 0;
+      return ;
     }else{
+      this._graphService.pushPushPercentData(Math.round(gamesPushed / gamesPlayed * 100));
       return Math.round((gamesPushed / gamesPlayed) * 100);
     }
+  }
+
+  toggleGraph():void{
+    this._graphService.toggleGraphModal();
   }
 
 }

@@ -9,6 +9,8 @@ import { ControlsComponent } from './controls/controls.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalComponent } from './modal/modal.component';
 import { StatsComponent } from './stats/stats.component';
+import { TrendModule } from 'ngx-trend';
+import { GraphComponent } from './graph/graph.component';
 
 
 @NgModule({
@@ -18,12 +20,14 @@ import { StatsComponent } from './stats/stats.component';
     PlayerComponent,
     ControlsComponent,
     ModalComponent,
-    StatsComponent
+    StatsComponent,
+    GraphComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    TrendModule
   ],
   providers: [],
   bootstrap: [AppComponent]

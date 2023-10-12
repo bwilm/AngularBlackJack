@@ -1,19 +1,24 @@
 <div class=" flex flex-row justify-evenly fixed bottom-0 w-full bg-black bg-opacity-5 p-1 h-20 mt-[20px] mb-[10px]">
     
-    
     <div class="flex flex-col h-14 w-[175px] min-w-[175px] p-3 bg-black bg-opacity-10 rounded-lg shadow-lg items-center justify-center">
-        <h3 class="text-2xl text-cyan-600 font-extrabold">{{gamesPlayed}}</h3>
+      <button class="rounded-full shadow-lg shadow-slate-600 bg-black h-14 w-28 flex items-center justify-center" (click)="toggleGraph()">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" id="graph"><path d="M23 22a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 2 0v16.7l6.17-9.25a1 1 0 0 1 1.66 0l3.1 4.65 7.2-12.6a1 1 0 0 1 1.74 1l-8 14a1 1 0 0 1-.87.5 1 1 0 0 1-.86-.45L10 11.8 3.87 21H22a1 1 0 0 1 1 1Z" fill="#ffffff" class="color000000 svgShape"></path></svg>
+    </button>
+    </div>
+
+    <div class="flex flex-col h-14 w-[175px] min-w-[175px] p-3 bg-transparent bg-opacity-10 rounded-lg shadow-lg items-center justify-center">
+        <h3 class="text-2xl text-teal-600 font-extrabold">{{gamesPlayed}}</h3>
         <h4 class="text-sm text-cyan-600">Games Played</h4>
     </div>
 
     <div class="flex flex-col h-14 w-[175px] min-w-[175px] p-3 bg-black bg-opacity-10 rounded-md shadow-lg items-center justify-center">
         <h3 class="text-2xl text-teal-600 font-extrabold">{{calculateWinPercent()}}%</h3>
-        <h4 class="text-sm text-teal-600">Win Percentage</h4>
+        <h4 class="text-sm text-teal-600">Player Advantage</h4>
     </div>
 
-    <div class="flex flex-col h-14 w-[175px] min-w-[175px] p-3 bg-black bg-opacity-10 rounded-md shadow-lg items-center justify-center">
+    <div  class="flex flex-col h-14 w-[175px] min-w-[175px] p-3 bg-black bg-opacity-10 rounded-md shadow-lg items-center justify-center">
         <h3 class="text-2xl text-rose-600 font-extrabold">{{calculateLossPercent()}}%</h3>
-        <h4 class="text-sm text-rose-600 ">Dealer Win Percentage</h4>
+        <h4 class="text-sm text-rose-600 ">Dealer Advantage</h4>
     </div>
 
     <div class="flex flex-col h-14 w-[175px] min-w-[175px] p-3 bg-black bg-opacity-10 rounded-md shadow-lg items-center justify-center">

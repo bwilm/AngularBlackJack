@@ -3,6 +3,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { BlackjackService } from '../services/blackjack.service';
 import { CardI } from '../cardsI.interface';
 import { StatsService } from '../services/stats.service';
+import { GraphService } from '../services/graph.service';
 
 @Component({
   selector: 'app-controls',
@@ -22,7 +23,7 @@ export class ControlsComponent implements OnInit, OnDestroy {
   public isDisabled:boolean = false;
   public _unsubscribeAll: Subject<any> = new Subject<any>();
 
-  constructor(private _service: BlackjackService, private _statsService:StatsService){
+  constructor(private _service: BlackjackService, private _statsService:StatsService, private _graphService:GraphService){
     this._service.$playerScore.pipe(takeUntil(this._unsubscribeAll)).subscribe((score)=>{this.playerScore = score;});
     this._service.$dealerScore.pipe(takeUntil(this._unsubscribeAll)).subscribe((score)=>{this.playerScore = score});
     this._service._dealerHandArray.pipe(takeUntil(this._unsubscribeAll)).subscribe((data)=>{
@@ -87,5 +88,6 @@ export class ControlsComponent implements OnInit, OnDestroy {
         }
     this._service._playerScore.next(playerScore);
   }
+
 
 }
