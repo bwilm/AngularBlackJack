@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { GraphService } from './graph.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,10 +19,13 @@ export class StatsService {
   public $gamesWon = this._gamesWon.asObservable();
   public $gamesLost = this._gamesLost.asObservable();
   
-  constructor() { }
+  constructor(public _graphService:GraphService ) {}
 
   public incrementGamesPlayed() {
+    
+    
     this._gamesPlayed.next(this._gamesPlayed.value + 1);
+    this._graphService.pushGamesPlayedData(this._gamesPlayed.value+1);
   }
 
   public incrementGamesPushed() {
@@ -33,7 +37,7 @@ export class StatsService {
   }
 
   public incrementGamesLost() {
-        this._gamesLost.next(this._gamesLost.value + 1);
+        this._gamesLost.next(this._gamesLost.value + 1);    
   }
 
  

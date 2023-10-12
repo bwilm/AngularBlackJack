@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { BlackjackService } from '../services/blackjack.service';
 import { ModalService } from '../services/modal.service';
 
@@ -13,22 +13,18 @@ export class ModalComponent {
   public modalType:string = "win";
   public modalTitle:string = "";
   public isBlackJack:boolean = false;
-  public modalColor:string = "";
+  public bgColor = '';
+  public playerScore:number = 0;
+  public dealerScore:number = 0;
 
-  constructor(public _modalService: ModalService, public _service:BlackjackService) {
-  this._modalService._showModal.subscribe(value => {
+  constructor(public _modalService: ModalService, public _service:BlackjackService, private cd: ChangeDetectorRef){
+
+    this._modalService._showModal.subscribe(value => {
     this.isShowing = value;
+
    })
    this._modalService._modalTitle.subscribe(value => {
     this.modalTitle = value;
-    if(value === "Player Bust :(" || value === "Dealer Wins" || value === "Player Bust!"){
-      this.modalColor = "rose-600";
-    }else if(value === "'Push'"){
-      this.modalColor = "amber-600";
-    }else{
-      this.modalColor = "teal-600";
-    }
-  
   })
    this._modalService._modalType.subscribe(value => {
     this.modalType = value;
@@ -41,5 +37,7 @@ export class ModalComponent {
  public toggleModal(): void {
   this._modalService._showModal.next(false);
   }
+
+
 }
 

@@ -1,5 +1,5 @@
 import { Component,OnDestroy,OnInit } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { of, Subject, takeUntil } from 'rxjs';
 import { BlackjackService } from './services/blackjack.service';
 import { cards } from './cards'
 import { CardI } from './cardsI.interface'
@@ -202,22 +202,23 @@ export class AppComponent implements OnInit, OnDestroy {
      this.result = '';
   
     if (playerScore > 21) {
-      this.result = 'Player Bust :(';
+      this.result = "Player Bust :(";
 
     } else if (dealerScore > 21) {
-      this.result = 'Dealer Busts, You Win!';
+      this.result = "Dealer Busts, You Win!";
 
     } else if (playerScore - dealerScore === 0) {
-      this.result = 'Push';
+      this.result = "Push";
 
     } else if (playerScore > dealerScore) {
-      this.result = 'Player Wins';
+      this.result = "Player Wins";
 
     } else {
-      this.result = 'Dealer Wins';
+      this.result = "Dealer Wins";
 
     }
     this._modalService._modalTitle.next(this.result)
+
     this.endGame();
     
   }
@@ -234,9 +235,9 @@ export class AppComponent implements OnInit, OnDestroy {
     this._service._deal.next(false);
     
    
-    if(this.result === 'Player Wins' || this.result === 'Dealer Busts, You Win!'){
+    if(this.result === "Player Wins" || this.result === "Dealer Busts, You Win!"){
       this._statsService.incrementGamesWon();
-    }else if(this.result === 'Push'){
+    }else if(this.result === "Push"){
       this._statsService.incrementGamesPushed();
 
     }else{
