@@ -56,6 +56,9 @@ jobs:
       # 6. Copy to S3 Bucket
       - name: Copy to S3 Bucket
         run: |
-          aws s3 cp ./dist/* s3://angularblackjack --region us-east-1
+          aws s3 cp ./dist s3://angularblackjack/ --recursive
+        env:
+          AWS_DEFAULT_REGION: us-east-1
+
 
 
