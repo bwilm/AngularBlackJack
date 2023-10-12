@@ -11,34 +11,27 @@ jobs:
     name: Build and Deploy Job
     steps:
 
-      # 1. Checkout Repository
+      # 1. Configure AWS Credentials      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      # 2. Checkout Repository
       - name: Checkout Repository
-        uses: actions/checkout@v3
-        with:
-          ref: main
+        uses: actions/checkout@v2  # Updated to v2
       
-      # 2. Install and Configure AWS CLI
-      - name: Install and Configure AWS CLI
-        run: |
-          # Install AWS CLI
-          pip install awscli
-
-          # Configure AWS CLI
-          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY }}
-          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws configure set region us-east-1
-        env:
-          AWS_DEFAULT_REGION: us-east-1
-
-      # 3. Setup Node
+      # 3. Setup Node 
       - name: Setup Node 
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v2  # Updated to v2
         with:
-          node-version: '18.17.1'
-          
+          node-version: '14'
+
       # 4. Setup Cache
       - name: Setup Cache
-        uses: actions/cache@v3
+        uses: actions/cache@v2  # Updated to v2
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -48,17 +41,11 @@ jobs:
       # 5. Build Angular
       - name: Build Angular
         run: |
-          ls
           npm install -g @angular/cli
           npm install
           ng build
-          
+
       # 6. Copy to S3 Bucket
       - name: Copy to S3 Bucket
         run: |
-          aws s3 cp ./dist s3://angularblackjack/ --recursive
-        env:
-          AWS_DEFAULT_REGION: us-east-1
-
-
-
+          aws s3 cp ./dist/ s3://angularblackjack/ --recursive --region us-east-1
